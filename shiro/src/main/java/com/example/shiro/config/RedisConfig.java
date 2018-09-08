@@ -56,6 +56,10 @@ public class RedisConfig {
     }
 
 
+    /**
+     * 创建代理的redis对象，代理类中实现自动关闭close()
+     * @return Jedis的代理对象
+     */
     public static Jedis getAutoJedis() {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(Jedis.class);

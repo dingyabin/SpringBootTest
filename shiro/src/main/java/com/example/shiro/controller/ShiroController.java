@@ -16,10 +16,7 @@ public class ShiroController {
 
     @RequestMapping("test")
     public String tets(){
-        for (int i = 0; i < 200; i++) {
         RedisConfig.getAutoJedis().setex("aaaa",111,"dingaybin" );
-
-        }
         return "111";
     }
 
