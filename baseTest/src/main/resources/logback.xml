@@ -1,0 +1,47 @@
+<configuration debug="false" scan="false" scanPeriod="10 seconds">
+
+    <property name="log.root" value="log"/>
+    <!--&lt;!&ndash; 引入 服务名, 做 日志文件路径 和 文件名 &ndash;&gt;-->
+    <!--<include resource="appNameForLogback.xml"/>-->
+    <property name="encoding" value="UTF-8"/>
+    <property name="normal-pattern"
+              value="%d{yyyy-MM-dd.HH:mm:ss.SSS} %highlight(%-5level) TraceId[%X{traceId}] [%thread] %logger{10}.%M:%L %msg%n"/>
+
+    <property name="file-pattern"
+              value="%d{yyyy-MM-dd.HH:mm:ss.SSS}  %level TraceId[%X{traceId}] [%thread] %logger{10}.%M:%L %msg%n"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${normal-pattern}</pattern>
+            <charset>${encoding}</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.root}/springboot.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.root}/springboot.log.%d{yyyy-MM-dd}.gz</FileNamePattern>
+            <maxHistory>2</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${file-pattern}</pattern>
+            <charset>${encoding}</charset>
+        </encoder>
+    </appender>
+
+    <appender name="MYAPPENDER" class="com.example.demo.appender.MyAppender">
+        <location>${log.root}/springboot.log</location>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="FILE"/>-->
+    </root>
+
+    <logger name="com.example.demo" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="FILE"/>-->
+        <appender-ref ref="MYAPPENDER"/>
+    </logger>
+
+</configuration>
