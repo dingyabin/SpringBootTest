@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -19,6 +20,7 @@ import java.io.IOException;
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @ServletComponentScan("com.example.shiro.filter")
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
 @MapperScan("com.example.shiro.dao")
 public class ShiroApplication {
@@ -36,7 +38,6 @@ public class ShiroApplication {
         );
         return configurer;
     }
-
 
 
 }
