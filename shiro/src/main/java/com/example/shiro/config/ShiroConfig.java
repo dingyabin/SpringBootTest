@@ -2,7 +2,6 @@ package com.example.shiro.config;
 
 import com.example.shiro.filter.shirofilter.AnyRoleOkFilter;
 import com.example.shiro.realms.CustomerRealm;
-import com.google.common.collect.Maps;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -12,10 +11,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.Resource;
 import javax.servlet.Filter;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -28,26 +24,43 @@ import java.util.Map;
 public class ShiroConfig {
 
 
-    @Resource
-    private CustomerRealm customerRealm;
 
-
+    //自定义filter
     @Bean("anyRoleOkFilter")
     public AuthorizationFilter anyRoleOkFilter(){
        return new AnyRoleOkFilter();
     }
 
 
+
+
+    //自定义Realm
+    @Bean(name = "customerRealm")
+    public CustomerRealm customerRealm() {
+        CustomerRealm customerRealm = new CustomerRealm();
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashAlgorithmName("md5");
+        matcher.setHashIterations(1);
+        customerRealm.setCredentialsMatcher(matcher);
+        return customerRealm;
+    }
+
+
+
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean() {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean() {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager());
-        shiroFilterFactoryBean.setLoginUrl("/login.jsp");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403.jsp");
+
+        shiroFilterFactoryBean.setLoginUrl("/shiro/unlogin");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/shiro/unauthorized");
 
         Map<String, String> map = shiroFilterFactoryBean.getFilterChainDefinitionMap();
-        map.put("/health", "authc");
-        map.put("/init/**", "authc");
+
+        map.put("/shiro/login", "anon");
+        map.put("/static/**", "anon");
+        map.put("/shiro/auth", "authc");
+       // map.put("/shiro/role", "roles[admin,user]");
         map.put("/**", "anon");
 
         Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
@@ -62,11 +75,7 @@ public class ShiroConfig {
     @Bean(name = "securityManager")
     public DefaultWebSecurityManager defaultWebSecurityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
-        matcher.setHashAlgorithmName("md5");
-        matcher.setHashIterations(1);
-        customerRealm.setCredentialsMatcher(matcher);
-        securityManager.setRealm(customerRealm);
+        securityManager.setRealm(customerRealm());
         return securityManager;
     }
 
@@ -88,6 +97,17 @@ public class ShiroConfig {
         aasa.setSecurityManager(defaultWebSecurityManager());
         return new AuthorizationAttributeSourceAdvisor();
     }
+
+
+
+//    @Bean
+//    public FilterRegistrationBean delegatingFilterProxy(){
+//        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+//        proxy.setTargetBeanName("shiroFilter");
+//        registrationBean.setFilter(proxy);
+//        return registrationBean;
+//    }
 
 
 }
