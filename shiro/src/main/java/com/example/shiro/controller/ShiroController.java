@@ -34,7 +34,7 @@ public class ShiroController {
     }
 
 
-    @RequiresRoles({"admin"})
+    //@RequiresRoles({"admin"})
     @RequestMapping("/role")
     public String role(){
         return "role ok!";

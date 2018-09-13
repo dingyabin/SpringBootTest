@@ -1,15 +1,19 @@
 package com.example.shiro.config;
 
+import com.example.shiro.cache.ShiroRedisSessionDao;
 import com.example.shiro.filter.shirofilter.AnyRoleOkFilter;
 import com.example.shiro.realms.CustomerRealm;
+import com.example.shiro.session.CustomerSessionManager;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
 import java.util.Map;
@@ -60,7 +64,7 @@ public class ShiroConfig {
         map.put("/shiro/login", "anon");
         map.put("/static/**", "anon");
         map.put("/shiro/auth", "authc");
-       // map.put("/shiro/role", "roles[admin,user]");
+        map.put("/shiro/role", "roles[admin]");
         map.put("/**", "anon");
 
         Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
@@ -76,6 +80,10 @@ public class ShiroConfig {
     public DefaultWebSecurityManager defaultWebSecurityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(customerRealm());
+        //设置SessionManager，SessionManager中采用自定义的ShiroRedisSessionDao
+        CustomerSessionManager sessionManager=new CustomerSessionManager();
+        sessionManager.setSessionDAO(new ShiroRedisSessionDao());
+        securityManager.setSessionManager(sessionManager);
         return securityManager;
     }
 
@@ -93,21 +101,22 @@ public class ShiroConfig {
     //注解支持
     @Bean("authorizationAttributeSourceAdvisor")
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
-        AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
-        aasa.setSecurityManager(defaultWebSecurityManager());
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(defaultWebSecurityManager());
         return new AuthorizationAttributeSourceAdvisor();
     }
 
 
 
-//    @Bean
-//    public FilterRegistrationBean delegatingFilterProxy(){
-//        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-//        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-//        proxy.setTargetBeanName("shiroFilter");
-//        registrationBean.setFilter(proxy);
-//        return registrationBean;
-//    }
+    @Bean
+    public FilterRegistrationBean delegatingFilterProxy(){
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+        proxy.setTargetFilterLifecycle(true);
+        proxy.setTargetBeanName("shiroFilter");
+        registrationBean.setFilter(proxy);
+        return registrationBean;
+    }
 
 
 }

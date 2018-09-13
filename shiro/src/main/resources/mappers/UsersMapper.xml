@@ -12,7 +12,8 @@
     id, username, password, password_salt
   </sql>
 
-  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap" useCache="true">
     select 
       <include refid="Base_Column_List" />
     from users

@@ -1,6 +1,7 @@
 package com.example.shiro;
 
 
+import com.example.shiro.config.MyPropertySources;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,9 +31,9 @@ public class ShiroApplication {
     }
 
 
-    @Bean("propertySourcesPlaceholderConfigurer")
-    public PropertySourcesPlaceholderConfigurer configurer() throws IOException {
-        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+    @Bean("myPropertySources")
+    public MyPropertySources configurer() throws IOException {
+        MyPropertySources configurer = new MyPropertySources();
         configurer.setLocations(
                 new PathMatchingResourcePatternResolver().getResources("classpath:**/*.properties")
         );
