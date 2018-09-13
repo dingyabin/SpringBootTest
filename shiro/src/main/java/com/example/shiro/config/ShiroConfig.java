@@ -1,5 +1,6 @@
 package com.example.shiro.config;
 
+import com.example.shiro.cache.RedisCacheManager;
 import com.example.shiro.cache.ShiroRedisSessionDao;
 import com.example.shiro.filter.shirofilter.AnyRoleOkFilter;
 import com.example.shiro.realms.CustomerRealm;
@@ -84,6 +85,7 @@ public class ShiroConfig {
         CustomerSessionManager sessionManager=new CustomerSessionManager();
         sessionManager.setSessionDAO(new ShiroRedisSessionDao());
         securityManager.setSessionManager(sessionManager);
+        securityManager.setCacheManager(new RedisCacheManager());
         return securityManager;
     }
 
