@@ -41,7 +41,7 @@ public class CustomerRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
-        User user = userService.selectByUserNameWithRolesAndPermissions(username);
+        User user = userService.selectByUserName(username);
         if (user == null) {
             return null;
         }

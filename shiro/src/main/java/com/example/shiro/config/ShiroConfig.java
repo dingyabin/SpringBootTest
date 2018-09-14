@@ -29,14 +29,11 @@ import java.util.Map;
 public class ShiroConfig {
 
 
-
     //自定义filter
     @Bean("anyRoleOkFilter")
-    public AuthorizationFilter anyRoleOkFilter(){
-       return new AnyRoleOkFilter();
+    public AuthorizationFilter anyRoleOkFilter() {
+        return new AnyRoleOkFilter();
     }
-
-
 
 
     //自定义Realm
@@ -49,7 +46,6 @@ public class ShiroConfig {
         customerRealm.setCredentialsMatcher(matcher);
         return customerRealm;
     }
-
 
 
     @Bean(name = "shiroFilter")
@@ -75,14 +71,12 @@ public class ShiroConfig {
     }
 
 
-
-
     @Bean(name = "securityManager")
     public DefaultWebSecurityManager defaultWebSecurityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(customerRealm());
         //设置SessionManager，SessionManager中采用自定义的ShiroRedisSessionDao
-        CustomerSessionManager sessionManager=new CustomerSessionManager();
+        CustomerSessionManager sessionManager = new CustomerSessionManager();
         sessionManager.setSessionDAO(new ShiroRedisSessionDao());
         securityManager.setSessionManager(sessionManager);
         securityManager.setCacheManager(new RedisCacheManager());
@@ -90,14 +84,11 @@ public class ShiroConfig {
     }
 
 
-
-
-   //自动调用生命周期函数(init,destory)
+    //自动调用生命周期函数(init,destory)
     @Bean(name = "lifecycleBeanPostProcessor")
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
-
 
 
     //注解支持
@@ -109,9 +100,8 @@ public class ShiroConfig {
     }
 
 
-
     @Bean
-    public FilterRegistrationBean delegatingFilterProxy(){
+    public FilterRegistrationBean delegatingFilterProxy() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         DelegatingFilterProxy proxy = new DelegatingFilterProxy();
         proxy.setTargetFilterLifecycle(true);

@@ -1,8 +1,0 @@
-2018-09-12.01:05:39.192  INFO TraceId[] [main] c.e.s.ShiroApplication.logStarting:48 Starting ShiroApplication on MrDing-PC with PID 7880 (D:\IDEworkspace\springBootTest\shiro\target\classes started by MrDing in D:\IDEworkspace\springBootTest)
-2018-09-12.01:05:39.207  INFO TraceId[] [main] c.e.s.ShiroApplication.logStartupProfileInfo:593 No active profile set, falling back to default profiles: default
-2018-09-12.01:10:11.171  INFO TraceId[] [main] c.e.s.ShiroApplication.logStarting:48 Starting ShiroApplication on MrDing-PC with PID 11080 (D:\IDEworkspace\springBootTest\shiro\target\classes started by MrDing in D:\IDEworkspace\springBootTest)
-2018-09-12.01:10:11.217  INFO TraceId[] [main] c.e.s.ShiroApplication.logStartupProfileInfo:593 No active profile set, falling back to default profiles: default
-2018-09-12.01:20:40.102  INFO TraceId[] [main] c.e.s.ShiroApplication.logStarting:48 Starting ShiroApplication on MrDing-PC with PID 13096 (D:\IDEworkspace\springBootTest\shiro\target\classes started by MrDing in D:\IDEworkspace\springBootTest)
-2018-09-12.01:20:40.106  INFO TraceId[] [main] c.e.s.ShiroApplication.logStartupProfileInfo:593 No active profile set, falling back to default profiles: default
-2018-09-12.01:20:42.783  INFO TraceId[] [main] c.e.s.c.RedisConfig.getConnectionFactory:40 JedisConnectionFactory bean init success.......
-2018-09-12.01:20:43.894  INFO TraceId[] [main] c.e.s.ShiroApplication.logStarted:57 Started ShiroApplication in 4.161 seconds (JVM running for 5.681)
