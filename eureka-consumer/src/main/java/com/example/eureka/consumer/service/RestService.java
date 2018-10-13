@@ -1,13 +1,17 @@
 package com.example.eureka.consumer.service;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import provider.common.model.Weight;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -26,12 +30,12 @@ public class RestService {
     private final String PROVIDERNAME = "PROVIDER";
 
 
-    public String remoteCall(){
-        String url = "http://" + PROVIDERNAME + "/service/v1";
+    public Weight remoteCall(Weight  weight){
+        String url = "http://" + PROVIDERNAME + "/provider/service/v1";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
-        HttpEntity<String> httpEntity = new HttpEntity<String>("{}", httpHeaders);
-        return restTemplate.postForObject(url, httpEntity, String.class);
+        HttpEntity<String> httpEntity = new HttpEntity<String>(JSONObject.toJSONString(weight), httpHeaders);
+        return restTemplate.postForObject(url, httpEntity, Weight.class);
     }
 
 

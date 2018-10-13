@@ -1,5 +1,8 @@
 package com.example.demo.designpattern.ordertask;
 
+import org.springframework.core.Ordered;
+
+import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
@@ -13,7 +16,7 @@ import java.util.concurrent.Executors;
  */
 public class JobContext {
 
-    private static final SortedSet<Job> jobs = new TreeSet<>((o1, o2) -> o1.getOrder() - o2.getOrder());
+    private static final SortedSet<Job> jobs = new TreeSet<>(Comparator.comparingInt(Ordered::getOrder));
 
     private static final ExecutorService pool = Executors.newFixedThreadPool(10);
 
