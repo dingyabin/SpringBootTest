@@ -1,8 +1,9 @@
 package provider.client.feign;
 
+import com.google.common.base.Strings;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import org.springframework.stereotype.Component;
+import org.slf4j.MDC;
 
 import java.util.UUID;
 
@@ -11,11 +12,14 @@ import java.util.UUID;
  * Date: 2018/10/9.
  * Time:23:58
  */
-@Component
 public class FeignIntercepter implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
-        template.header("traceId", UUID.randomUUID().toString().toUpperCase());
+        String traceId = MDC.get("traceId");
+        if (Strings.isNullOrEmpty(traceId)) {
+            traceId = UUID.randomUUID().toString().toUpperCase().replaceAll("-", "");
+        }
+        template.header("traceId", traceId);
     }
 }
