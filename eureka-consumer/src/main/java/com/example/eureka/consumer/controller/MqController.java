@@ -26,13 +26,12 @@ public class MqController {
 
     @RequestMapping("/send")
     public String testMq() {
-
         testService.getName();
 
-
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 100; i++) {
             MqSender.send("ding.topic.key", "this is a messge_"+i);
         }
+
         return "ok!";
     }
 

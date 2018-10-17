@@ -27,9 +27,7 @@ public abstract class BaseConcumer<T> {
     public void consume(@Payload T message, @Headers Map<String, Object> properties, Channel channel) throws IOException {
         Stopwatch started = Stopwatch.createStarted();
         try {
-            Object traceId = properties.get("traceId");
-            MDC.put("traceId", traceId != null ? traceId.toString() : UUID.randomUUID().toString().replace("-", ""));
-            log.info("收到mq消息,message={}", message);
+            handleTraceId(message, properties);
             onMessage(message);
         } catch (Exception e) {
             log.error("BaseConcumer#consume()---->error", e);
@@ -45,6 +43,17 @@ public abstract class BaseConcumer<T> {
             log.info("队列:{}, 交换机:{}, 路由键:{}, 消费完成,耗时:{}ms", queue, exchenge, routingKey, started.elapsed(TimeUnit.MILLISECONDS));
         }
     }
+
+
+
+
+    private void handleTraceId(T message,Map<String, Object> properties) {
+        Object traceId = properties.get("traceId");
+        MDC.put("traceId", (traceId != null) ? traceId.toString() : UUID.randomUUID().toString().toUpperCase().replace("-", ""));
+        log.info("收到mq消息,message={}", message);
+    }
+
+
 
     protected abstract void onMessage(T message) throws Exception;
 
