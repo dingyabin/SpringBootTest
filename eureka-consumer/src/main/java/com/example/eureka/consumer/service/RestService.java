@@ -2,6 +2,7 @@ package com.example.eureka.consumer.service;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -34,6 +35,7 @@ public class RestService {
         String url = "http://" + PROVIDERNAME + "/provider/service/v1";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
+        httpHeaders.add("traceId", MDC.get("traceId"));
         HttpEntity<String> httpEntity = new HttpEntity<String>(JSONObject.toJSONString(weight), httpHeaders);
         return restTemplate.postForObject(url, httpEntity, Weight.class);
     }

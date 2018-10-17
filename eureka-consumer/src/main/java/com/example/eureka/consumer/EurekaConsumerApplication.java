@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
  * Time: 14:44
  * function:
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example")
 @EnableEurekaClient
 @EnableFeignClients("provider.client.service")
 @ServletComponentScan("com.example.eureka.consumer.filter")
