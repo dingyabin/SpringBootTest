@@ -1,4 +1,4 @@
-package com.example.eureka.consumer.test;
+package com.example.eureka.consumer.register;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
@@ -25,13 +25,13 @@ public class CustomerBeanRegister implements BeanDefinitionRegistryPostProcessor
 
     private BeanNameGenerator beanNameGenerator = new AnnotationBeanNameGenerator();
 
-    private String basePackages="com.example.eureka.consumer.test";
+    private String basePackages = "provider.common.api";
 
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
 
-        ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false){
+        ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false) {
             @Override
             protected boolean isCandidateComponent(AnnotatedBeanDefinition definition) {
                 return definition.getMetadata().isInterface();
@@ -58,12 +58,10 @@ public class CustomerBeanRegister implements BeanDefinitionRegistryPostProcessor
     }
 
 
-
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 
     }
-
 
 
 }

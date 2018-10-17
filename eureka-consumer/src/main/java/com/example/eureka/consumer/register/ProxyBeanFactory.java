@@ -1,4 +1,4 @@
-package com.example.eureka.consumer.test;
+package com.example.eureka.consumer.register;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.FactoryBean;

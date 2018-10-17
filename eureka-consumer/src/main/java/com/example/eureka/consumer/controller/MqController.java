@@ -1,6 +1,5 @@
 package com.example.eureka.consumer.controller;
 
-import com.example.eureka.consumer.test.TestService;
 import com.example.rabbit.client.MqSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;

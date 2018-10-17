@@ -119,7 +119,7 @@ public class MyController {
     @RequestMapping("/test7")
     public ModelAndView test7(){
         InputStream stream = MyDownLoadView.class.getResourceAsStream("/banner/banner.txt");
-        return new ModelAndView(new MyDownLoadView("test.txt", stream));
+        return new ModelAndView(new MyDownLoadView("register.txt", stream));
     }
 
     @RequestMapping("/test8")
