@@ -6,6 +6,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,10 +17,11 @@ import org.springframework.web.client.RestTemplate;
  * Time: 14:44
  * function:
  */
-@SpringBootApplication(scanBasePackages = "com.example")
+@SpringBootApplication(scanBasePackages = {"com.example","provider.client"})
 @EnableEurekaClient
 @EnableFeignClients("provider.client.service")
 @ServletComponentScan("com.example.eureka.consumer.filter")
+@EnableHystrix
 public class EurekaConsumerApplication {
 
     public static void main(String[] args) {

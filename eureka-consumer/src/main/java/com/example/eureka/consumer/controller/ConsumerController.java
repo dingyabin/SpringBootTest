@@ -52,10 +52,7 @@ public class ConsumerController {
 
 
 
-    @RequestMapping("api/test")
-    public String gateway(){
-        return "ok";
-    }
+
 
 
 

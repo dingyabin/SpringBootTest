@@ -28,14 +28,17 @@ public class Weight implements Serializable {
 
     private Date createTime;
 
+    private String desc;
+
 
     public Weight() {
     }
 
-    public Weight(double weight, double waist, Date createTime) {
+    public Weight(double weight, double waist,String desc) {
         this.weight = weight;
         this.waist = waist;
-        this.createTime = createTime;
+        this.createTime = new Date();
+        this.desc=desc;
     }
 
 

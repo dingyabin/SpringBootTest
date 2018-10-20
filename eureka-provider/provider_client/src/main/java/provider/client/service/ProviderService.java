@@ -4,6 +4,7 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import provider.client.config.MyFeignClientsConfig;
+import provider.client.factory.ProviderServiceFactory;
 import provider.common.model.Weight;
 
 /**
@@ -11,12 +12,13 @@ import provider.common.model.Weight;
  * Date: 2018/10/13.
  * Time:12:57
  */
-@FeignClient(value = "provider", configuration = MyFeignClientsConfig.class)
+@FeignClient(value = "eureka-provider",
+             configuration = MyFeignClientsConfig.class,
+             fallbackFactory = ProviderServiceFactory.class)
 public interface ProviderService {
 
 
     @RequestMapping("provider/service/v1")
     Weight provider(@RequestBody Weight weight);
-
 
 }

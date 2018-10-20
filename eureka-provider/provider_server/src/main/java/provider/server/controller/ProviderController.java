@@ -24,7 +24,7 @@ public class ProviderController {
     @RequestMapping("service/v1")
     public Weight provider(@RequestBody Weight weight){
         log.info("provider/service/v1 收到请求:{}", weight);
-        weight.setCreateTime(new Date());
+        weight.setDesc("这是正常返回的。。。。");
         return weight;
     }
 
