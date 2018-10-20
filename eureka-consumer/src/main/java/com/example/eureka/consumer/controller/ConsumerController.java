@@ -50,4 +50,13 @@ public class ConsumerController {
         return weight1;
     }
 
+
+
+    @RequestMapping("api/test")
+    public String gateway(){
+        return "ok";
+    }
+
+
+
 }

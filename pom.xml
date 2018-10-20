@@ -15,6 +15,7 @@
         <module>websocket</module>
         <module>shiro</module>
         <module>common</module>
+        <module>api-gateway</module>
     </modules>
 
     <packaging>pom</packaging>
