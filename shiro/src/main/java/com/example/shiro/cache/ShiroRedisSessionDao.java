@@ -1,6 +1,6 @@
 package com.example.shiro.cache;
 
-import com.example.shiro.config.RedisConfig;
+import com.example.redis.RedisUtil;
 import com.example.shiro.utils.ConfigUtil;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
@@ -39,7 +39,7 @@ public class ShiroRedisSessionDao extends AbstractSessionDAO {
         byte[] k = getKey(session.getId().toString());
         byte[] v = SerializationUtils.serialize(session);
         session.setTimeout(1000 * ConfigUtil.getLong("shiro.session.timeout"));
-        RedisConfig.getAutoJedis().setex(k, ConfigUtil.getInt("shiro.session.timeout"), v);
+        RedisUtil.getAutoJedis().setex(k, ConfigUtil.getInt("shiro.session.timeout"), v);
     }
 
 
@@ -49,7 +49,7 @@ public class ShiroRedisSessionDao extends AbstractSessionDAO {
             return null;
         }
         byte[] k = getKey(sessionId.toString());
-        byte[] v = RedisConfig.getAutoJedis().get(k);
+        byte[] v = RedisUtil.getAutoJedis().get(k);
         return (Session)SerializationUtils.deserialize(v);
     }
 
@@ -68,12 +68,12 @@ public class ShiroRedisSessionDao extends AbstractSessionDAO {
         if (session.getId()==null){
             return;
         }
-        RedisConfig.getAutoJedis().del(getKey(session.getId().toString()));
+        RedisUtil.getAutoJedis().del(getKey(session.getId().toString()));
     }
 
     @Override
     public Collection<Session> getActiveSessions() {
-        Set<byte[]> keys = RedisConfig.getAutoJedis().keys(getKey("*"));
+        Set<byte[]> keys = RedisUtil.getAutoJedis().keys(getKey("*"));
         return keys.stream().map(k -> (Session)SerializationUtils.deserialize(k)).collect(Collectors.toSet());
     }
 

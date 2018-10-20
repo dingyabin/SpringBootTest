@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * @author MrDing
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class, scanBasePackages = "com.example")
 @ServletComponentScan("com.example.shiro.filter")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement

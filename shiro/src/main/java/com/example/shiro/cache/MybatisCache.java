@@ -1,6 +1,6 @@
 package com.example.shiro.cache;
 
-import com.example.shiro.config.RedisConfig;
+import com.example.redis.RedisUtil;
 import org.apache.ibatis.cache.Cache;
 import org.springframework.util.SerializationUtils;
 
@@ -44,14 +44,14 @@ public class MybatisCache implements Cache {
     public void putObject(Object key, Object value) {
         byte[] k_bytes = (key.toString()).getBytes();
         byte[] v_bytes = SerializationUtils.serialize(value);
-        RedisConfig.getAutoJedis().setex(k_bytes, expire, v_bytes);
+        RedisUtil.getAutoJedis().setex(k_bytes, expire, v_bytes);
     }
 
 
     @Override
     public Object getObject(Object key) {
         byte[] k_bytes = (key.toString()).getBytes();
-        byte[] v_bytes = RedisConfig.getAutoJedis().get(k_bytes);
+        byte[] v_bytes = RedisUtil.getAutoJedis().get(k_bytes);
         return SerializationUtils.deserialize(v_bytes);
     }
 
@@ -59,7 +59,7 @@ public class MybatisCache implements Cache {
     @Override
     public Object removeObject(Object key) {
         byte[] k_bytes = (key.toString()).getBytes();
-        return RedisConfig.getAutoJedis().del(k_bytes);
+        return RedisUtil.getAutoJedis().del(k_bytes);
     }
 
 

@@ -1,6 +1,6 @@
 package com.example.shiro.cache;
 
-import com.example.shiro.config.RedisConfig;
+import com.example.redis.RedisUtil;
 import com.example.shiro.utils.ConfigUtil;
 import com.google.common.collect.Sets;
 import org.apache.shiro.cache.Cache;
@@ -24,7 +24,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public V get(K key) throws CacheException {
-        byte[] v = RedisConfig.getAutoJedis().get(getKey(key));
+        byte[] v = RedisUtil.getAutoJedis().get(getKey(key));
         if (v != null) {
             return (V) SerializationUtils.deserialize(v);
         }
@@ -36,7 +36,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
     public V put(K key, V value) throws CacheException {
         byte[] k = getKey(key);
         byte[] v = SerializationUtils.serialize(value);
-        RedisConfig.getAutoJedis().setex(k, ConfigUtil.getInt("shiro.session.timeout"), v);
+        RedisUtil.getAutoJedis().setex(k, ConfigUtil.getInt("shiro.session.timeout"), v);
         return value;
     }
 
@@ -44,7 +44,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
     @Override
     public V remove(K key) throws CacheException {
         V previous = get(key);
-        RedisConfig.getAutoJedis().del(getKey(key));
+        RedisUtil.getAutoJedis().del(getKey(key));
         return previous;
     }
 
@@ -61,7 +61,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public Set<K> keys() {
-        Set<byte[]> keys = RedisConfig.getAutoJedis().keys((PREFIX + "*").getBytes());
+        Set<byte[]> keys = RedisUtil.getAutoJedis().keys((PREFIX + "*").getBytes());
         Set<K> set = Sets.newHashSet();
         if (keys != null) {
             for (byte[] key : keys) {

@@ -1,7 +1,6 @@
-package com.example.shiro.config;
+package com.example.redis;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
@@ -14,12 +13,12 @@ import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Created by MrDing
- * Date: 2018/9/7.
- * Time:23:48
+ * Date: 2018/10/17.
+ * Time:23:34
  */
 @Slf4j
 @Configuration
-public class RedisConfig {
+public class RedisUtil {
 
     private static JedisPool pool;
 
@@ -45,14 +44,14 @@ public class RedisConfig {
     @Bean("jedisPool")
     public JedisPool getJedisPool() {
         JedisConnectionFactory connectionFactory = getConnectionFactory();
-        RedisConfig.pool = new JedisPool(
+        RedisUtil.pool = new JedisPool(
                 connectionFactory.getPoolConfig(),
                 connectionFactory.getHostName(),
                 connectionFactory.getPort(),
                 connectionFactory.getTimeout(),
                 connectionFactory.getPassword()
         );
-        return RedisConfig.pool;
+        return RedisUtil.pool;
     }
 
 
@@ -67,7 +66,7 @@ public class RedisConfig {
             Object result = null;
             Jedis jedis = null;
             try {
-                jedis = RedisConfig.pool.getResource();
+                jedis = RedisUtil.pool.getResource();
                 result = method.invoke(jedis, args);
             } catch (Exception e) {
                 log.error("jedis.{}()出错,args={}", method.getName(), args, e);
@@ -80,5 +79,7 @@ public class RedisConfig {
         });
         return (Jedis) enhancer.create();
     }
+
+
 
 }

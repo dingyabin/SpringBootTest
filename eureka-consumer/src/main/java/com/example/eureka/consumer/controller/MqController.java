@@ -4,6 +4,7 @@ import com.example.rabbit.client.MqSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import provider.common.api.ModelApi;
 
 import javax.annotation.Resource;
 
@@ -19,13 +20,10 @@ import javax.annotation.Resource;
 public class MqController {
 
     @Resource
-    private TestService testService;
-
-
+    private ModelApi modelApi;
 
     @RequestMapping("/send")
     public String testMq() {
-        testService.getName();
 
         for (int i = 0; i < 100; i++) {
             MqSender.send("ding.topic.key", "this is a messge_"+i);
