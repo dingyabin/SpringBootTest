@@ -5,7 +5,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -27,7 +26,7 @@ public class MybatisConfig {
 
 
     @Bean("transactionManager")
-    public PlatformTransactionManager transactionManager(){
+    public DataSourceTransactionManager transactionManager(){
        return  new DataSourceTransactionManager(dataSource());
     }
 

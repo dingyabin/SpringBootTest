@@ -12,5 +12,6 @@ import com.example.demo.bean.MyLog;
 @TargetDataSource(DataSourceType.FIRSTDATASOURCE)
 public interface MyLogDao {
 
+    @TargetDataSource(DataSourceType.FIRSTDATASOURCE)
     int insertOne(MyLog myLog);
 }

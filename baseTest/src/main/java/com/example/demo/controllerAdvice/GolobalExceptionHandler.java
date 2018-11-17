@@ -28,7 +28,7 @@ public class GolobalExceptionHandler {
         map.put("code","E00001");
         map.put("success",false);
         map.put("message",exception.getMessage());
-        logger.error("发生异常了，{}",exception.getMessage());
+        logger.error("发生异常了，{}",exception);
         return map;
     }
 

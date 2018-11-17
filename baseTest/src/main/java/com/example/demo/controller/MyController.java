@@ -7,6 +7,8 @@ import com.example.demo.dao.TbUserDao;
 import com.example.demo.model.Student;
 import com.example.demo.myConfig.MyConfig;
 import com.example.demo.result.Result;
+import com.example.demo.service.MuliService;
+import com.example.demo.service.StudentService;
 import com.example.demo.service.WeightService;
 import com.example.demo.view.MyDownLoadView;
 import com.github.pagehelper.PageHelper;
@@ -25,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +60,12 @@ public class MyController {
 
     @Resource
     private TbUserDao tbUserDao;
+
+    @Resource
+    private StudentService studentService;
+
+    @Resource
+    private MuliService muliService;
 
 
     @RequestMapping("/test")
@@ -130,6 +139,15 @@ public class MyController {
             throw  new NullPointerException("xxxxxxxxxxxxxxxxx");
         }
         return s;
+    }
+
+
+    @RequestMapping("/test9")
+    public String test9(){
+        //weightService.insertWeight(new Weight(10,2 ,new Date()));
+        //studentService.save(new com.example.demo.bean.Student("222", "3", 3, new Date()));
+        muliService.save();
+        return "pk";
     }
 
 

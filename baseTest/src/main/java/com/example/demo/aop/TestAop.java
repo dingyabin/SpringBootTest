@@ -2,7 +2,6 @@ package com.example.demo.aop;
 
 import com.example.demo.datasource.DynamicDataSourceHolder;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -20,27 +19,22 @@ import java.lang.reflect.Method;
  * @author MrDing
  */
 
-@Order(1)
-@Aspect
-@Component
-public class ChangeDataSourceAop {
+//@Order(2)
+//@Aspect
+//@Component
+public class TestAop {
 
 
-    @Pointcut(value = "execution(* com.example.demo.dao..*.*(..))")
-    public void pointcutMethod() {
 
-    }
-
-
-    @Before("pointcutMethod()")
-    public void changeDataSource(JoinPoint joinPoint){
+    @Before("execution(* com.example.demo.service..*.*(..))")
+    public void changeDataSource(JoinPoint joinPoint) throws NoSuchMethodException {
+        Object target = joinPoint.getTarget();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        Class<?> declaringClass = method.getDeclaringClass();
+        Method method = target.getClass().getMethod(signature.getName(), signature.getParameterTypes());
 
         //处理类上的注解
-        if (declaringClass.isAnnotationPresent(TargetDataSource.class)) {
-            TargetDataSource annotation = declaringClass.getAnnotation(TargetDataSource.class);
+        if (target.getClass().isAnnotationPresent(TargetDataSource.class)) {
+            TargetDataSource annotation = target.getClass().getAnnotation(TargetDataSource.class);
             DynamicDataSourceHolder.setDataSource(annotation.value().getType());
         }
 
@@ -49,11 +43,6 @@ public class ChangeDataSourceAop {
             TargetDataSource annotation = method.getAnnotation(TargetDataSource.class);
             DynamicDataSourceHolder.setDataSource(annotation.value().getType());
         }
-    }
-
-    @After("pointcutMethod()")
-    public void clear(){
-        DynamicDataSourceHolder.clearDataSource();
     }
 
 

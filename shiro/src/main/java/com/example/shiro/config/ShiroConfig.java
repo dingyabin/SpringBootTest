@@ -96,7 +96,7 @@ public class ShiroConfig {
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(defaultWebSecurityManager());
-        return new AuthorizationAttributeSourceAdvisor();
+        return advisor;
     }
 
 

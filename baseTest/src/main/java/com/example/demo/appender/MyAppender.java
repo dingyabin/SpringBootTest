@@ -44,7 +44,7 @@ public class MyAppender extends AppenderBase<ILoggingEvent> {
                         + "." + iLoggingEvent.getCallerData()[0].getMethodName());
                 myLog.setLineNumber(iLoggingEvent.getCallerData()[0].getLineNumber());
                 myLog.setCreateTime(new Date(iLoggingEvent.getTimeStamp()));
-                myLogService.saveMyLog(myLog);
+                //myLogService.saveMyLog(myLog);
             }
         });
     }

@@ -30,12 +30,23 @@
         </encoder>
     </appender>
 
+
+    <appender name="SOCKET" class="ch.qos.logback.classic.net.SocketAppender">
+        <port>4560</port>
+        <remoteHost>127.0.0.1</remoteHost>
+        <reconnectionDelay>10000</reconnectionDelay>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
+
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 
+
     <logger name="com.example.shiro" level="INFO" additivity="false">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="SOCKET"/>
         <!--<appender-ref ref="FILE"/>-->
     </logger>
 
