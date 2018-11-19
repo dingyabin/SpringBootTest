@@ -100,30 +100,30 @@ public class MyConfigration {
     }
 
 
-    /**
-     * 配置sqlSessionFactory
-     *
-     * @return SqlSessionFactory对象
-     * @throws Exception
-     */
-    @Bean(name="sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
-        try {
-            SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
-            sessionFactoryBean.setDataSource(dynamicDataSource());
-            sessionFactoryBean.setTransactionFactory(new MultiDataSourceTransactionFactory());
-            //设置mapper.xml文件所在位置
-            Resource[] resources = new PathMatchingResourcePatternResolver().getResources(mapperXmlLocation);
-            sessionFactoryBean.setMapperLocations(resources);
-            return sessionFactoryBean.getObject();
-        } catch (IOException e) {
-            log.error("mybatis resolver mapper*xml is error",e);
-            return null;
-        } catch (Exception e) {
-            log.error("mybatis sqlSessionFactoryBean create error",e);
-            return null;
-        }
-    }
+//    /**
+//     * 配置sqlSessionFactory
+//     *
+//     * @return SqlSessionFactory对象
+//     * @throws Exception
+//     */
+//    @Bean(name="sqlSessionFactory")
+//    public SqlSessionFactory sqlSessionFactory() throws Exception {
+//        try {
+//            SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
+//            sessionFactoryBean.setDataSource(dynamicDataSource());
+//            sessionFactoryBean.setTransactionFactory(new MultiDataSourceTransactionFactory());
+//            //设置mapper.xml文件所在位置
+//            Resource[] resources = new PathMatchingResourcePatternResolver().getResources(mapperXmlLocation);
+//            sessionFactoryBean.setMapperLocations(resources);
+//            return sessionFactoryBean.getObject();
+//        } catch (IOException e) {
+//            log.error("mybatis resolver mapper*xml is error",e);
+//            return null;
+//        } catch (Exception e) {
+//            log.error("mybatis sqlSessionFactoryBean create error",e);
+//            return null;
+//        }
+//    }
 
 
 

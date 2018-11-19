@@ -1,11 +1,11 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.aop.CustomerTransction;
 import com.example.demo.bean.QueryConditon;
 import com.example.demo.bean.Weight;
 import com.example.demo.dao.WeightDao;
 import com.example.demo.service.WeightService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -24,7 +24,7 @@ public class WeightServiceImpl implements WeightService {
 
 
     @Override
-    @Transactional
+    @CustomerTransction
     public int insertWeight(Weight weight) {
         return weightDao.insertWeight(new Weight(33, 22, new Date()));
     }

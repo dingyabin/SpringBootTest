@@ -146,7 +146,7 @@ public class MyController {
     public String test9(){
         //weightService.insertWeight(new Weight(10,2 ,new Date()));
         //studentService.save(new com.example.demo.bean.Student("222", "3", 3, new Date()));
-        muliService.save();
+        muliService.save2();
         return "pk";
     }
 

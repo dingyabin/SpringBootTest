@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.aop.CustomerTransction;
 import com.example.demo.bean.Student;
 import com.example.demo.dao.StudentDao;
 import com.example.demo.service.StudentService;
@@ -22,7 +23,7 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    @Transactional()
+    @CustomerTransction
     public int save(Student record) {
         return studentDao.insert(record);
     }

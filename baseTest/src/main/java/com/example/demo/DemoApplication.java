@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @ServletComponentScan("com.example.demo.filter")
 //启注解事务管理，等同于xml配置方式的 <tx:annotation-driven />
-@EnableTransactionManagement
+//@EnableTransactionManagement
 @MapperScan("com.example.demo.dao")
 public class DemoApplication {
 

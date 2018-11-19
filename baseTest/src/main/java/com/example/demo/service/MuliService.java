@@ -8,4 +8,5 @@ package com.example.demo.service;
 public interface MuliService {
 
     void save();
+    void save2();
 }
