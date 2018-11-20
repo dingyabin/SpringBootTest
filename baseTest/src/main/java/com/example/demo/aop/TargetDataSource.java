@@ -14,5 +14,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TargetDataSource {
 
-    DataSourceType value() default DataSourceType.FIRSTDATASOURCE;
+    DataSourceType value() default DataSourceType.DS_A;
 }

@@ -8,15 +8,15 @@ package com.example.demo.aop;
 public enum DataSourceType {
 
     /**
-     *firstDataSource
+     *ds_b
      */
-    FIRSTDATASOURCE("firstDataSource"),
+    DS_A("ds_a"),
 
 
     /**
-     * secDataSource
+     * ds_b
      */
-    SECDATASOURCE("secDataSource") ;
+    DS_B("ds_b") ;
 
     private String type;
 

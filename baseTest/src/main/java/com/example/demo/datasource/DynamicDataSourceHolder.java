@@ -1,7 +1,7 @@
 package com.example.demo.datasource;
 
 
-import static com.example.demo.aop.DataSourceType.FIRSTDATASOURCE;
+import static com.example.demo.aop.DataSourceType.DS_A;
 
 /**
  * Created by Discard on 2016/11/7.
@@ -16,7 +16,7 @@ public class DynamicDataSourceHolder {
 
     public static String getDataSource() {
         if(null == CONTEXT_HOLDER.get()){
-            DynamicDataSourceHolder.setDataSource(FIRSTDATASOURCE.getType());
+            DynamicDataSourceHolder.setDataSource(DS_A.getType());
         }
         return CONTEXT_HOLDER.get();
     }

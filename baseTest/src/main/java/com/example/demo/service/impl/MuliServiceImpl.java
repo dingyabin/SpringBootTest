@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.aop.CustomerTransction;
 import com.example.demo.bean.Weight;
 import com.example.demo.dao.StudentDao;
-import com.example.demo.dao.TbUserDao;
 import com.example.demo.dao.WeightDao;
 import com.example.demo.service.MuliService;
 import com.example.demo.service.StudentService;

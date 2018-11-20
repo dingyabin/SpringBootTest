@@ -3,27 +3,21 @@ package com.example.demo.configration;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.example.demo.datasource.DynamicDataSource;
 import com.example.demo.model.Student;
-import com.example.demo.transaction.MultiDataSourceTransactionFactory;
 import com.github.pagehelper.PageInterceptor;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
-import static com.example.demo.aop.DataSourceType.FIRSTDATASOURCE;
-import static com.example.demo.aop.DataSourceType.SECDATASOURCE;
+import static com.example.demo.aop.DataSourceType.DS_A;
+import static com.example.demo.aop.DataSourceType.DS_B;
 
 /**
  * Created by MrDing
@@ -73,15 +67,15 @@ public class MyConfigration {
     }
 
 
-    @Bean("firstDataSource")
-    @ConfigurationProperties("first.datasource")
+    @Bean("ds_a")
+    @ConfigurationProperties("ds_a.datasource")
     public DataSource firstDataSource() {
         return new DruidDataSource();
     }
 
 
-    @Bean("secDataSource")
-    @ConfigurationProperties("sec.datasource")
+    @Bean("ds_b")
+    @ConfigurationProperties("ds_b.datasource")
     public DataSource secDataSource() {
         return new DruidDataSource();
     }
@@ -92,39 +86,12 @@ public class MyConfigration {
     public DataSource dynamicDataSource() {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         Map<Object, Object> dataSources = Maps.newHashMap();
-        dataSources.put(FIRSTDATASOURCE.getType(), firstDataSource());
-        dataSources.put(SECDATASOURCE.getType(), secDataSource());
+        dataSources.put(DS_A.getType(), firstDataSource());
+        dataSources.put(DS_B.getType(), secDataSource());
         dynamicDataSource.setTargetDataSources(dataSources);
         dynamicDataSource.setDefaultTargetDataSource(firstDataSource());
         return dynamicDataSource;
     }
-
-
-//    /**
-//     * 配置sqlSessionFactory
-//     *
-//     * @return SqlSessionFactory对象
-//     * @throws Exception
-//     */
-//    @Bean(name="sqlSessionFactory")
-//    public SqlSessionFactory sqlSessionFactory() throws Exception {
-//        try {
-//            SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
-//            sessionFactoryBean.setDataSource(dynamicDataSource());
-//            sessionFactoryBean.setTransactionFactory(new MultiDataSourceTransactionFactory());
-//            //设置mapper.xml文件所在位置
-//            Resource[] resources = new PathMatchingResourcePatternResolver().getResources(mapperXmlLocation);
-//            sessionFactoryBean.setMapperLocations(resources);
-//            return sessionFactoryBean.getObject();
-//        } catch (IOException e) {
-//            log.error("mybatis resolver mapper*xml is error",e);
-//            return null;
-//        } catch (Exception e) {
-//            log.error("mybatis sqlSessionFactoryBean create error",e);
-//            return null;
-//        }
-//    }
-
 
 
 }
