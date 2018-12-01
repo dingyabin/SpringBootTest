@@ -11,12 +11,39 @@
   <sql id="Base_Column_List">
     id, name, sex, age, birth
   </sql>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from student
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectDistinct"  resultType="map" >
+        select
+            DISTINCT name value,
+            'stu_name'    field
+        from
+            student
+
+        union
+
+        select
+            DISTINCT sex value,
+            'stu_sex'    field
+        from
+            student
+
+        union
+
+        select
+            DISTINCT age value,
+            'stu_age'    field
+        from
+            student
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from student
     where id = #{id,jdbcType=INTEGER}

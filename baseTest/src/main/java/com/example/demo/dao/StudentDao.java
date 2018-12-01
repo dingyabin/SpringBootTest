@@ -5,7 +5,10 @@ import com.example.demo.aop.DataSourceType;
 import com.example.demo.aop.TargetDataSource;
 import com.example.demo.bean.Student;
 
-@TargetDataSource(DataSourceType.SECDATASOURCE)
+import java.util.List;
+import java.util.Map;
+
+@TargetDataSource(DataSourceType.DS_B)
 public interface StudentDao {
 
     int deleteByPrimaryKey(Integer id);
@@ -19,4 +22,6 @@ public interface StudentDao {
     int updateByPrimaryKeySelective(Student record);
 
     int updateByPrimaryKey(Student record);
+
+    List<Map<String,String>> selectDistinct();
 }

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.bean.Weight;
 import com.example.demo.configration.WeConfig;
+import com.example.demo.dao.StudentDao;
 import com.example.demo.dao.TbUserDao;
 import com.example.demo.model.Student;
 import com.example.demo.myConfig.MyConfig;
@@ -13,7 +14,9 @@ import com.example.demo.service.WeightService;
 import com.example.demo.view.MyDownLoadView;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -57,6 +60,10 @@ public class MyController {
 
     @Resource
     private WeightService weightService;
+
+
+    @Resource
+    private StudentDao studentDao;
 
     @Resource
     private TbUserDao tbUserDao;
@@ -139,6 +146,17 @@ public class MyController {
             throw  new NullPointerException("xxxxxxxxxxxxxxxxx");
         }
         return s;
+    }
+
+
+
+
+    @RequestMapping("/test10")
+    public String test10(){
+        List<Map<String, String>> maps = studentDao.selectDistinct();
+        Multimap<String, String> multimap = ArrayListMultimap.create();
+        maps.forEach(map -> multimap.put(map.get("field"), map.get("value")));
+        return JSONObject.toJSONString(multimap);
     }
 
 

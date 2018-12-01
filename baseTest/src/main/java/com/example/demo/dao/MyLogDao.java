@@ -9,9 +9,9 @@ import com.example.demo.bean.MyLog;
  * Date: 2017/8/13.
  * Time:20:30
  */
-@TargetDataSource(DataSourceType.FIRSTDATASOURCE)
+@TargetDataSource(DataSourceType.DS_A)
 public interface MyLogDao {
 
-    @TargetDataSource(DataSourceType.FIRSTDATASOURCE)
+    @TargetDataSource(DataSourceType.DS_A)
     int insertOne(MyLog myLog);
 }

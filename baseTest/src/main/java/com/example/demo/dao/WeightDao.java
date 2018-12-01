@@ -14,7 +14,7 @@ import java.util.List;
  * Date: 2017/3/18.
  * Time:19:23
  */
-@TargetDataSource(DataSourceType.FIRSTDATASOURCE)
+@TargetDataSource(DataSourceType.DS_A)
 public interface WeightDao {
 
     int insertWeight(Weight weight);

@@ -52,6 +52,4 @@ public class MuliServiceImpl implements MuliService {
         studentService.save(new com.example.demo.bean.Student("225", "5", 3, new Date()));
         //throw new NullPointerException("xxxx");
     }
-
-
 }
