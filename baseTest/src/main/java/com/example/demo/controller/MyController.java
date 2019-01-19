@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.aoptest.AopTest;
 import com.example.demo.bean.Weight;
 import com.example.demo.configration.WeConfig;
 import com.example.demo.dao.StudentDao;
@@ -73,6 +74,10 @@ public class MyController {
 
     @Resource
     private MuliService muliService;
+
+
+    @Resource
+    private AopTest aopTest;
 
 
     @RequestMapping("/test")
@@ -168,6 +173,13 @@ public class MyController {
         return "pk";
     }
 
+
+
+    @RequestMapping("/test110")
+    public String test110(){
+        aopTest.test();
+        return "ok";
+    }
 
 
 }
