@@ -3,24 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <artifactId>common</artifactId>
         <groupId>com.example</groupId>
-        <artifactId>springboot-test</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <packaging>pom</packaging>
-    <artifactId>common</artifactId>
-
-    <modules>
-        <module>rabbitMq</module>
-        <module>redis</module>
-        <module>zk</module>
-        <module>dubbo</module>
-        <module>api</module>
-        <module>log</module>
-    </modules>
-
     <modelVersion>4.0.0</modelVersion>
 
+    <artifactId>dubbo</artifactId>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.spring.boot</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+    </dependencies>
 
 </project>
