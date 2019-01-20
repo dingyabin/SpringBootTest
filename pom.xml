@@ -16,6 +16,7 @@
         <module>shiro</module>
         <module>common</module>
         <module>api-gateway</module>
+        <module>db-sharding</module>
     </modules>
 
     <packaging>pom</packaging>
