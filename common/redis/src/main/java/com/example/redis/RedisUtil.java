@@ -1,6 +1,7 @@
 package com.example.redis;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
@@ -10,6 +11,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Protocol;
 
 /**
  * Created by MrDing
@@ -22,6 +24,17 @@ public class RedisUtil {
 
     private static JedisPool pool;
 
+    @Value("${spring.redis.hostName}")
+    private String host;
+
+    @Value("${spring.redis.password}")
+    private String pwd;
+
+    @Value("${spring.redis.port}")
+    private int port;
+
+
+
 
     @Bean
     @ConfigurationProperties(prefix = "spring.redis.pool")
@@ -30,26 +43,25 @@ public class RedisUtil {
     }
 
 
-    @Bean
-    @ConfigurationProperties(prefix = "spring.redis")
-    public JedisConnectionFactory getConnectionFactory() {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setUsePool(true);
-        factory.setPoolConfig(jedisPoolConfig());
-        log.info("JedisConnectionFactory bean init success.......");
-        return factory;
-    }
+//    @Bean
+//    @ConfigurationProperties(prefix = "spring.redis")
+//    public JedisConnectionFactory getConnectionFactory() {
+//        JedisConnectionFactory factory = new JedisConnectionFactory();
+//        factory.setUsePool(true);
+//        factory.setPoolConfig(jedisPoolConfig());
+//        log.info("JedisConnectionFactory bean init success.......");
+//        return factory;
+//    }
 
 
     @Bean("jedisPool")
     public JedisPool getJedisPool() {
-        JedisConnectionFactory connectionFactory = getConnectionFactory();
         RedisUtil.pool = new JedisPool(
-                connectionFactory.getPoolConfig(),
-                connectionFactory.getHostName(),
-                connectionFactory.getPort(),
-                connectionFactory.getTimeout(),
-                connectionFactory.getPassword()
+                jedisPoolConfig(),
+                host,
+                port,
+                Protocol.DEFAULT_TIMEOUT,
+                pwd
         );
         return RedisUtil.pool;
     }
