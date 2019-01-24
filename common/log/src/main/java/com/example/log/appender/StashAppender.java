@@ -37,7 +37,7 @@ public class StashAppender extends AppenderBase<ILoggingEvent> {
                                                               Executors.defaultThreadFactory()
                                                 );
         try {
-            properties.load(StashAppender.class.getResourceAsStream("/application.properties"));
+            properties.load(StashAppender.class.getResourceAsStream("/config/application.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,7 +71,7 @@ public class StashAppender extends AppenderBase<ILoggingEvent> {
             myMap.put("ip", AppendUtil.getAddress());
             myMap.put("host", AppendUtil.getHost());
             myMap.put("appName", properties.getProperty("spring.application.name"));
-            myMap.put("environment", properties.getProperty("example.Environment"));
+            myMap.put("environment", properties.getProperty("spring.Environment"));
             myMap.put("loggerName", iLoggingEvent.getLoggerName());
             myMap.put("logLevel", iLoggingEvent.getLevel().levelStr);
             myMap.put("logLevelValue", iLoggingEvent.getLevel().levelInt);

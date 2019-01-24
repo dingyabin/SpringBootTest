@@ -1,6 +1,7 @@
 package com.example.redis;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cglib.proxy.Enhancer;
@@ -20,7 +21,7 @@ import redis.clients.jedis.Protocol;
  */
 @Slf4j
 @Configuration
-public class RedisUtil {
+public class RedisUtil implements InitializingBean {
 
     private static JedisPool pool;
 
@@ -34,9 +35,7 @@ public class RedisUtil {
     private int port;
 
 
-
-
-    @Bean
+    @Bean("jedisPoolConfig")
     @ConfigurationProperties(prefix = "spring.redis.pool")
     public JedisPoolConfig jedisPoolConfig() {
         return new JedisPoolConfig();
@@ -54,18 +53,10 @@ public class RedisUtil {
 //    }
 
 
-    @Bean("jedisPool")
-    public JedisPool getJedisPool() {
-        RedisUtil.pool = new JedisPool(
-                jedisPoolConfig(),
-                host,
-                port,
-                Protocol.DEFAULT_TIMEOUT,
-                pwd
-        );
-        return RedisUtil.pool;
+    @Override
+    public void afterPropertiesSet(){
+        RedisUtil.pool = new JedisPool(jedisPoolConfig(), host, port, Protocol.DEFAULT_TIMEOUT, pwd);
     }
-
 
     /**
      * 创建代理的redis对象，代理类中实现自动关闭close()
@@ -91,7 +82,5 @@ public class RedisUtil {
         });
         return (Jedis) enhancer.create();
     }
-
-
 
 }
