@@ -32,16 +32,25 @@ public class HttpFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        StopWatch stopWatch=new StopWatch();
+        StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         HttpServletRequestWrapper request = new HttpServletRequestWrapper(httpServletRequest);
-        HttpServletResponseWrapper reponse=new HttpServletResponseWrapper(httpServletResponse);
-        MDC.put("traceId", UUID.randomUUID().toString().replaceAll("-", ""));
-        logger.info("收到http请求，ip={}, method={}, url={},header={}", getRealIpAddress(request),request.getMethod(),
-                request.getRequestURL().toString(), getRequestHeader(request));;
+        HttpServletResponseWrapper reponse = new HttpServletResponseWrapper(httpServletResponse);
+        String traceId = request.getHeader("traceId");
+        if (traceId == null) {
+            traceId = UUID.randomUUID().toString().replaceAll("-", "");
+        }
+        MDC.put("traceId", traceId);
+        logger.info("收到http请求，ip={}, method={}, url={},header={}",
+                getRealIpAddress(request),
+                request.getMethod(),
+                request.getRequestURL().toString(),
+                getRequestHeader(request)
+        );
         filterChain.doFilter(httpServletRequest, httpServletResponse);
+        reponse.addHeader("traceId", traceId);
         stopWatch.stop();
-        logger.info("返回response信息:header={},cost={}ms",getResponseHeader(reponse),stopWatch.getTotalTimeMillis());
+        logger.info("返回response信息:header={},cost={}ms", getResponseHeader(reponse), stopWatch.getTotalTimeMillis());
     }
 
 
@@ -49,7 +58,8 @@ public class HttpFilter extends OncePerRequestFilter {
         StringBuilder header = new StringBuilder("{");
         Enumeration<String> names = requestWrapper.getHeaderNames();
         while (names.hasMoreElements()) {
-            String name = names.nextElement();;
+            String name = names.nextElement();
+            ;
             header.append(String.format("\"%s \": \"%s\", ", name, requestWrapper.getHeader(name)));
         }
         header.append("}");
@@ -62,10 +72,10 @@ public class HttpFilter extends OncePerRequestFilter {
         StringBuilder header = new StringBuilder("{");
         Collection<String> headerNames = response.getHeaderNames();
         headerNames.forEach(name -> header.append(String.format("\"%s\" :\"%s\", ", name, response.getHeader(name))));
-        header.append("}");;
+        header.append("}");
+        ;
         return header.toString();
     }
-
 
 
     private String getRealIpAddress(HttpServletRequest request) {
@@ -75,7 +85,8 @@ public class HttpFilter extends OncePerRequestFilter {
             ip = request.getHeader("Proxy-UserLoginDTO-IP");
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-UserLoginDTO-IP");;
+            ip = request.getHeader("WL-Proxy-UserLoginDTO-IP");
+            ;
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_CLIENT_IP");

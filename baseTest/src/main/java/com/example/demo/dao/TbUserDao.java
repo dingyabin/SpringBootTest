@@ -6,7 +6,7 @@ import com.example.demo.bean.TbUser;
 
 import java.util.List;
 
-@TargetDataSource(DataSourceType.SECDATASOURCE)
+@TargetDataSource(DataSourceType.DS_B)
 public interface TbUserDao {
 
     int insert(TbUser record);

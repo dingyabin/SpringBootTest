@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -31,13 +32,20 @@ public class StashAppender extends AppenderBase<ILoggingEvent> {
     static {
         properties = new Properties();
         executorService = new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors() * 2,
-                                            Runtime.getRuntime().availableProcessors() * 2,
-                                                1, TimeUnit.MINUTES,
-                                                              new LinkedBlockingDeque<>(2048),
-                                                              Executors.defaultThreadFactory()
-                                                );
+                Runtime.getRuntime().availableProcessors() * 2,
+                1, TimeUnit.MINUTES,
+                new LinkedBlockingDeque<>(2048),
+                Executors.defaultThreadFactory()
+        );
         try {
-            properties.load(StashAppender.class.getResourceAsStream("/config/application.properties"));
+            InputStream resourceAsStream;
+            resourceAsStream = StashAppender.class.getResourceAsStream("/application.properties");
+            if (resourceAsStream == null) {
+                resourceAsStream = StashAppender.class.getResourceAsStream("/config/application.properties");
+            }
+            if (resourceAsStream != null) {
+                properties.load(resourceAsStream);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,9 +58,7 @@ public class StashAppender extends AppenderBase<ILoggingEvent> {
     }
 
 
-
-
-    private class AppendTask implements Runnable{
+    private class AppendTask implements Runnable {
 
         private ILoggingEvent iLoggingEvent;
         private Map<String, String> map;
@@ -85,7 +91,7 @@ public class StashAppender extends AppenderBase<ILoggingEvent> {
             }
             Object[] argumentArray = iLoggingEvent.getArgumentArray();
             if (argumentArray != null && argumentArray.length > 0) {
-                AppendUtil.logKeyValueInfo(myMap,argumentArray);
+                AppendUtil.logKeyValueInfo(myMap, argumentArray);
             }
             log.info(appendEntries(myMap), iLoggingEvent.getFormattedMessage());
         }

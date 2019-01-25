@@ -2,6 +2,7 @@ package com.example.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,7 +25,7 @@ import java.util.Set;
 @Slf4j
 @Configuration
 @ConditionalOnProperty(name = "enable", havingValue = "true", prefix = "example.jedisCluster")
-public class JedisClusterUtil implements InitializingBean {
+public class RedisClusterUtil implements InitializingBean, DisposableBean {
 
     @Value("${example.jedisCluster.hostAndPorts}")
     private String hostAndPorts;
@@ -59,7 +60,7 @@ public class JedisClusterUtil implements InitializingBean {
         if (set.isEmpty()) {
             return;
         }
-        JedisClusterUtil.jedisCluster = new JedisCluster(set, Protocol.DEFAULT_TIMEOUT, jedisClusterPoolConfig());
+        jedisCluster = new JedisCluster(set, jedisClusterPoolConfig());
     }
 
 
@@ -67,4 +68,11 @@ public class JedisClusterUtil implements InitializingBean {
         return jedisCluster;
     }
 
+
+    @Override
+    public void destroy() throws Exception {
+        if (jedisCluster != null) {
+            jedisCluster.close();
+        }
+    }
 }
