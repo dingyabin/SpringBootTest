@@ -62,6 +62,7 @@ public class ShiroConfig {
         map.put("/static/**", "anon");
         map.put("/shiro/auth", "authc");
         map.put("/shiro/role", "roles[admin]");
+        map.put("/shiro/anyRoleOK", "anyRoleOkFilter[admin]");
         map.put("/**", "anon");
 
         Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
