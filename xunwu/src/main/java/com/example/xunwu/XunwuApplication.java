@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class, scanBasePackages = "com.example")
-public class XunwuApplication {
+public class XunWuApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(XunwuApplication.class, args);
+        SpringApplication.run(XunWuApplication.class, args);
     }
 
 }
