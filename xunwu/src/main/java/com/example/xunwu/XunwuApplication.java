@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class, scanBasePackages = "com.example")
-@EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class, scanBasePackages = "com.example")
 public class XunWuApplication {
 
     public static void main(String[] args) {
