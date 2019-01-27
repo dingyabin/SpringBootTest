@@ -60,6 +60,7 @@
             <artifactId>log</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <!--ES-->
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
@@ -86,6 +87,7 @@
             <artifactId>transport-netty4-client</artifactId>
             <version>${elasticsearch.version}</version>
         </dependency>
+
         <!--把elasticsearch的日志框架转为slf-4j输出-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
