@@ -27,12 +27,12 @@ public class ShiroRedisSessionDao extends AbstractSessionDAO {
     protected Serializable doCreate(Session session) {
         Serializable sessionId = generateSessionId(session);
         assignSessionId(session, sessionId);
-        _saveSession(session);
+        saveSessionToRedis(session);
         return sessionId;
     }
 
 
-    private void _saveSession(Session session) {
+    private void saveSessionToRedis(Session session) {
         if (session.getId()==null){
             throw new RuntimeException("session.getId()=null");
         }
@@ -59,7 +59,7 @@ public class ShiroRedisSessionDao extends AbstractSessionDAO {
         if (session.getId()==null){
             return;
         }
-        _saveSession(session);
+        saveSessionToRedis(session);
     }
 
 

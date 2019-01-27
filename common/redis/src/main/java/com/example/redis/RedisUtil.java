@@ -3,6 +3,7 @@ package com.example.redis;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
@@ -20,36 +21,26 @@ import redis.clients.jedis.Protocol;
  */
 @Slf4j
 @Configuration
+@ConditionalOnProperty(name = "enable", havingValue = "true", prefix = "example.jedis")
 public class RedisUtil implements InitializingBean {
 
     private static JedisPool pool;
 
-    @Value("${spring.redis.hostName}")
+    @Value("${example.redis.hostName}")
     private String host;
 
-    @Value("${spring.redis.password}")
+    @Value("${example.redis.password}")
     private String pwd;
 
-    @Value("${spring.redis.port}")
+    @Value("${example.redis.port}")
     private int port;
 
 
     @Bean("jedisPoolConfig")
-    @ConfigurationProperties(prefix = "spring.redis.pool")
+    @ConfigurationProperties(prefix = "example.redis.pool")
     public JedisPoolConfig jedisPoolConfig() {
         return new JedisPoolConfig();
     }
-
-
-//    @Bean
-//    @ConfigurationProperties(prefix = "spring.redis")
-//    public JedisConnectionFactory getConnectionFactory() {
-//        JedisConnectionFactory factory = new JedisConnectionFactory();
-//        factory.setUsePool(true);
-//        factory.setPoolConfig(jedisPoolConfig());
-//        log.info("JedisConnectionFactory bean init success.......");
-//        return factory;
-//    }
 
 
     @Override

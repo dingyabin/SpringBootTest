@@ -14,8 +14,8 @@ import javax.sql.DataSource;
  * Date: 2018/9/6.
  * Time:22:13
  */
-@MapperScan(value = "com.example.xunwu.dao")
 @Configuration
+@MapperScan(value = "com.example.xunwu.dao")
 public class MybatisConfig {
 
 
