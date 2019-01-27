@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +39,7 @@ public class ESConfig {
             if (StringUtils.isBlank(host)){
                 continue;
             }
-            hostList.add(new InetSocketTransportAddress(InetAddress.getByName(host.trim()), 9300));
+            hostList.add(new TransportAddress(InetAddress.getByName(host.trim()), 9300));
         }
         Settings settings = Settings.builder()
                                     .put("cluster.name", clusterName)

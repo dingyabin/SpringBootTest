@@ -20,7 +20,7 @@ public class MybatisConfig {
 
 
     @Bean("dataSource")
-    @ConfigurationProperties("xunwu.datasource")
+    @ConfigurationProperties(prefix = "xunwu.datasource")
     public DataSource dataSource() {
         return new DruidDataSource();
     }
