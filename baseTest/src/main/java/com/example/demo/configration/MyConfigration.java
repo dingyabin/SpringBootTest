@@ -68,14 +68,14 @@ public class MyConfigration {
 
 
     @Bean("ds_a")
-    @ConfigurationProperties("ds_a.datasource")
+    @ConfigurationProperties("ds-a.datasource")
     public DataSource firstDataSource() {
         return new DruidDataSource();
     }
 
 
     @Bean("ds_b")
-    @ConfigurationProperties("ds_b.datasource")
+    @ConfigurationProperties("ds-b.datasource")
     public DataSource secDataSource() {
         return new DruidDataSource();
     }
