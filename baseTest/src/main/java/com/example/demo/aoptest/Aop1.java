@@ -33,7 +33,6 @@ public class Aop1 {
         System.out.println("Aop1------around-before");
         Object proceed = proceedingJoinPoint.proceed();
         System.out.println("Aop1------around-after");
-
         return proceed;
 
     }
