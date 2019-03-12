@@ -26,6 +26,6 @@ public class MqConsumeService extends BaseConcumer<String> {
     @Override
     protected void onMessage(String message) throws Exception {
         System.out.println("收到信息:" + message);
-        Thread.sleep(300);
+        Thread.sleep(300) ;
     }
 }
