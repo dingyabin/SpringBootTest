@@ -1,6 +1,7 @@
 package com.example.demo;
 
 
+import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
 import com.example.demo.configration.MyPropertySources;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @ServletComponentScan("com.example.demo.filter")
+@EnableDubboConfiguration
 //启注解事务管理，等同于xml配置方式的 <tx:annotation-driven />
 //@EnableTransactionManagement
 @MapperScan("com.example.demo.dao")

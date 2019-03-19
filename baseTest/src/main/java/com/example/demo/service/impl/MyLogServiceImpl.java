@@ -14,7 +14,6 @@ import javax.annotation.Resource;
  * Time:20:44
  */
 @Service("myLogService")
-@Scope("singleton")
 public class MyLogServiceImpl implements MyLogService {
 
 
