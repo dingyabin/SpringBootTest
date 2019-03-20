@@ -22,7 +22,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @ServletComponentScan("com.example.demo.filter")
-@EnableDubbo(scanBasePackages = "com.example")
+//@EnableDubbo
+
+@EnableDubboConfig(multiple = true)
+@DubboComponentScan
+//---------------------------------------
 //@EnableDubboConfiguration
 //启注解事务管理，等同于xml配置方式的 <tx:annotation-driven />
 //@EnableTransactionManagement
