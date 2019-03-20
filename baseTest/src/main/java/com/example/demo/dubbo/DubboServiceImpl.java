@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Time:11:16
  */
 @Component("dubboService")
-@Service(interfaceClass = DubboService.class, registry = "first", version = "0.1")
+@Service(interfaceClass = DubboService.class, version = "0.1",registry = "first")
 public class DubboServiceImpl implements DubboService {
 
     @Override
