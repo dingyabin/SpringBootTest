@@ -8,4 +8,6 @@ package com.example.api;
 public interface DubboService {
 
     String echo(String msg);
+
+
 }
