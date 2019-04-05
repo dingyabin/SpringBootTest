@@ -1,0 +1,2 @@
+consumerTraceIdFilter=com.example.filter.ConsumerTraceIdFilter
+providerTraceIdFilter=com.example.filter.ProviderTraceIdFilter

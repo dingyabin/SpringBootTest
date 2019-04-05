@@ -1,0 +1,57 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.example.demo.myConfig.MyConfig",
+      "name": "demo",
+      "type": "com.example.demo.myConfig.MyConfig"
+    },
+    {
+      "sourceType": "com.example.demo.configration.MyConfigration",
+      "name": "ds-a.datasource",
+      "sourceMethod": "firstDataSource()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "com.example.demo.configration.MyConfigration",
+      "name": "ds-b.datasource",
+      "sourceMethod": "secDataSource()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "com.example.demo.configration.MyConfigration",
+      "name": "student",
+      "sourceMethod": "student()",
+      "type": "com.example.demo.model.Student"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.example.demo.myConfig.MyConfig",
+      "defaultValue": 0,
+      "name": "demo.age",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.example.demo.myConfig.MyConfig",
+      "name": "demo.id",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.example.demo.myConfig.MyConfig",
+      "name": "demo.name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.example.demo.model.Student",
+      "defaultValue": 0,
+      "name": "student.age",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.example.demo.model.Student",
+      "name": "student.name",
+      "type": "java.lang.String"
+    }
+  ]
+}

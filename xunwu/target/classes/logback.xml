@@ -1,0 +1,26 @@
+<configuration debug="false" scan="false" scanPeriod="10 seconds">
+
+
+    <property name="log.root" value="log"/>
+    <property name="encoding" value="UTF-8"/>
+    <property name="normal-pattern"
+              value="%d{yyyy-MM-dd.HH:mm:ss.SSS} %highlight(%-5level) TraceId[%X{traceId}] [%thread] %logger{10}.%M:%L %msg%n"/>
+
+    <property name="file-pattern"
+              value="%d{yyyy-MM-dd.HH:mm:ss.SSS}  %level TraceId[%X{traceId}] [%thread] %logger{10}.%M:%L %msg%n"/>
+
+
+    <include resource="stashAppender.xml"/>
+
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <logger name="com.example.xunwu" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="FILE"/>-->
+        <appender-ref ref="STASH-APPENDER"/>
+    </logger>
+
+</configuration>
