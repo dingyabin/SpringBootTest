@@ -51,7 +51,7 @@ public class ZooKeeperDistributedLock implements Watcher {
         }
     }
 
-    public void acquireDistributedLock() {
+    public void lock() {
         try {
             if (this.tryLock()) {
                 return;
