@@ -63,6 +63,7 @@ public class ZooKeeperDistributedLock implements Watcher {
         }
     }
 
+    
     public boolean tryLock() {
         try {
             // 传入进去的locksRoot + “/” + productId
